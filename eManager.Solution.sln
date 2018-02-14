@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eManager.Domain", "eManager.Domain\eManager.Domain.csproj", "{BE8CEDC5-D400-4C6E-B9AD-889062CC2F75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eManager.Web", "eManager.Web\eManager.Web.csproj", "{F16197EB-3F75-4908-9797-4AC62F741789}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eManager.DataAccess", "eManager.DataAccess\eManager.DataAccess.csproj", "{90654642-0C18-4C47-A24B-23F70F2ABEEE}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE8CEDC5-D400-4C6E-B9AD-889062CC2F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8CEDC5-D400-4C6E-B9AD-889062CC2F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8CEDC5-D400-4C6E-B9AD-889062CC2F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8CEDC5-D400-4C6E-B9AD-889062CC2F75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F16197EB-3F75-4908-9797-4AC62F741789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F16197EB-3F75-4908-9797-4AC62F741789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F16197EB-3F75-4908-9797-4AC62F741789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F16197EB-3F75-4908-9797-4AC62F741789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90654642-0C18-4C47-A24B-23F70F2ABEEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90654642-0C18-4C47-A24B-23F70F2ABEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90654642-0C18-4C47-A24B-23F70F2ABEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90654642-0C18-4C47-A24B-23F70F2ABEEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
