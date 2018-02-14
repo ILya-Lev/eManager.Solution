@@ -203,6 +203,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\eManager.DataAccess\eManager.DataAccess.csproj">
+      <Project>{90654642-0c18-4c47-a24b-23f70f2abeee}</Project>
+      <Name>eManager.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eManager.Domain\eManager.Domain.csproj">
+      <Project>{be8cedc5-d400-4c6e-b9ad-889062cc2f75}</Project>
+      <Name>eManager.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

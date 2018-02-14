@@ -6,6 +6,11 @@ namespace eManager.DataAccess
 {
 	public class DepartmentDb : DbContext, IDepartmentDataSource
 	{
+		public DepartmentDb() : base("DefaultConnection")
+		{
+
+		}
+
 		public DbSet<Employee> Employees { get; set; }
 
 		public DbSet<Department> Departments { get; set; }
