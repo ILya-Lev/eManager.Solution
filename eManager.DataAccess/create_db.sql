@@ -1,9 +1,9 @@
-PM> Update-Database -ProjectName eManager.DataAccess -Verbose
-Using StartUp project 'eManager.Web'.
-Specify the '-Verbose' flag to view the SQL statements being applied to the target database.
-Target database is: 'eManager.Web' (DataSource: (localdb)\MSSQLLocalDB, Provider: System.Data.SqlClient, Origin: Configuration).
-No pending explicit migrations.
-Applying automatic migration: 201802142328413_AutomaticMigration.
+-- PM> Update-Database -ProjectName eManager.DataAccess -Verbose
+-- Using StartUp project 'eManager.Web'.
+-- Specify the '-Verbose' flag to view the SQL statements being applied to the target database.
+-- Target database is: 'eManager.Web' (DataSource: (localdb)\MSSQLLocalDB, Provider: System.Data.SqlClient, Origin: Configuration).
+-- No pending explicit migrations.
+-- Applying automatic migration: 201802142328413_AutomaticMigration.
 
 CREATE TABLE [dbo].[Departments] (
     [Id] [int] NOT NULL IDENTITY,
@@ -28,5 +28,5 @@ CREATE TABLE [dbo].[__MigrationHistory] (
 INSERT [dbo].[__MigrationHistory]([MigrationId], [ContextKey], [Model], [ProductVersion])
 VALUES (N'201802142328413_AutomaticMigration', N'eManager.DataAccess.Migrations.Configuration',  ... , N'6.2.0-61023')
 
-Running Seed method.
-PM> 
+-- Running Seed method.
+-- PM> 
