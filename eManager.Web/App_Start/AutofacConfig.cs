@@ -22,7 +22,7 @@ namespace eManager.Web.App_Start
 
 			builder.RegisterControllers(Assembly.GetExecutingAssembly());
 
-			builder.RegisterType<DepartmentDb>().As<IDepartmentDataSource>();
+			builder.RegisterType<DepartmentDb>().As<IDepartmentDataSource>().InstancePerRequest();
 			return builder;
 		}
 		private static IContainer HookUpContainerIntoPipeline(ContainerBuilder builder)

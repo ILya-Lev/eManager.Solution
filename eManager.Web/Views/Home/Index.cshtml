@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<eManager.Domain.Department>
 
 @{
-	ViewBag.Title = "Index";
+	ViewBag.Title = "All departments";
 }
 
-<h1>Department Manager</h1>
+<h1>@ViewBag.Title</h1>
 
 <ul>
 	@foreach (var department in Model)
 	{
 		<li>
-			@department.Name
+			@Html.ActionLink(linkText: department.Name, actionName: "Details", controllerName: "Department", routeValues: new {id = department.Id}, htmlAttributes: null)
 		</li>
 	}
 </ul>
