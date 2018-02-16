@@ -1,26 +1,39 @@
-﻿@model eManager.Domain.Department
+﻿@using eManager.Domain
+@model eManager.Domain.Department
 
 @{
-    ViewBag.Title = "Details";
+	ViewBag.Title = "Department Details";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>Department</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+	<hr />
+	<dl class="dl-horizontal">
+		<dd>
+			@Html.DisplayFor(model => model.Name)
+		</dd>
+	</dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-    </dl>
+	<p>
+		@Html.ActionLink("Back to List", "Index", "Home")
+	</p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index", "Home")
-</p>
+
+<hr />
+<div>
+	@Html.ActionLink("Create an Employee", "Create", "Employee", new { departmentId = Model.Id }, null)
+	<table>
+		<tr>
+			<th>@Html.DisplayNameFor(model => model.Name)</th>
+			<th></th>
+		</tr>
+		@foreach (var employee in Model.Employees)
+		{
+			<tr>
+				<td>@employee.Name</td>
+				<td></td>
+			</tr>
+		}
+	</table>
+</div>

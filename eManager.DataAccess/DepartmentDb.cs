@@ -15,6 +15,8 @@ namespace eManager.DataAccess
 
 		public DbSet<Department> Departments { get; set; }
 
+		void IDepartmentDataSource.Save() => base.SaveChanges();
+
 		IQueryable<Employee> IDepartmentDataSource.Employees => Employees;
 
 		IQueryable<Department> IDepartmentDataSource.Departments => Departments;
