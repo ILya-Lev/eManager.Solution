@@ -5,6 +5,7 @@ using eManager.Web.Models;
 
 namespace eManager.Web.Controllers
 {
+	//[Authorize(Roles = "Admin")]
 	public class EmployeeController : Controller
 	{
 		private readonly IDepartmentDataSource _dataSource;
@@ -22,6 +23,7 @@ namespace eManager.Web.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Create(CreateEmployeeViewModel viewModel)
 		{
 			if (ModelState.IsValid)
