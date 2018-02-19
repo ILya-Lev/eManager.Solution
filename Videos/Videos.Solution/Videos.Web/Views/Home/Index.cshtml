@@ -1,31 +1,149 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+	ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<div id="videoTableOutput"></div>
+<button id="createVideo" class="btn btn-default">Create Video</button>
+<div id="videoEditOutput"></div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<script id="videoTable" type="text/html">
+	<table>
+		<thead>
+			<th>Title</th>
+			<th>Length</th>
+			<th></th>
+		</thead>
+		<tbody>
+			{{#each video}}
+			<tr data-id={{Id}}>
+				<td>{{Title}}</td>
+				<td>{{Length}}</td>
+				<td>
+					<button class="editVideo btn btn-info">Edit</button>
+					<button class="deleteVideo btn btn-danger">Delete</button>
+				</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</script>
+
+<script id="videoEdit" type="text/html">
+	<hr />
+	<form>
+		<input type="hidden" value="{{Id}}" name="id" id="id"/>
+		<label for="title">Title:</label>
+		<input type="text" required value="{{Title}}" name="Title" id="title"/>
+		<label for="length">Length:</label>
+		<input type="number" value="{{Length}}" name="Length" id="length" min="0" max="200"/>
+		<input type="submit" value="Save" id="saveVideo" class="btn btn-success"/>
+	</form>
+</script>
+
+@section scripts{
+	<script src="~/Scripts/handlebars.js"></script>
+
+	<script>
+		const videoServer = (function() {
+
+			const videoApiUrl = '@Url.RouteUrl("DefaultApi", new {httproute = "", controller = "Videos"})';
+
+			$(document).ajaxError(function(event, xhr) {
+				alert(`${xhr.status}:${xhr.statusText}`);
+			});
+
+			const getAllVideos = () => $.ajax(videoApiUrl);
+			const getOneVideo = (id) => $.ajax(`${videoApiUrl}/${id}`);
+			const updateVideo = (video) => $.ajax(`${videoApiUrl}/${video.Id}`, { type: 'put', data: video });
+			const createVideo = (video) => $.ajax(`${videoApiUrl}`, { type: 'post', data: video });
+			const deleteVideo = (id) => $.ajax(`${videoApiUrl}/${id}`, { type: 'delete' });
+
+			return {
+				getAllVideos,
+				getOneVideo,
+				updateVideo,
+				createVideo,
+				deleteVideo
+			};
+		}());
+
+		(function() {
+
+			//create templates
+			const templates = {};
+
+			const compileTemplates = function() {
+				templates.videoTable = Handlebars.compile($("#videoTable").html());
+				templates.videoEdit = Handlebars.compile($("#videoEdit").html());
+			};
+
+
+			//use templates
+			const showAllVideos = function(videoList) {
+				const output = templates.videoTable({ video: videoList }); //is this video the same as {{#each video}}?
+				$("#videoTableOutput").html(output);
+			};
+
+			const refreshVideos = () => videoServer.getAllVideos().done(showAllVideos);
+
+
+			//edit video handler
+			const getId = (element) => $(element).parents("tr").attr("data-id");
+
+			const showVideoForEdit = function(aVideo) {
+				const output = templates.videoEdit(aVideo);
+				$("#videoEditOutput").html(output);
+			};
+
+			const editVideo = function() {
+				const id = getId(this);
+				videoServer.getOneVideo(id).done(showVideoForEdit);
+			};
+
+
+			//save video handler
+			const clearEdit = () => $("#videoEditOutput").empty();
+
+			const saveVideo = function() {
+				const video = {
+					"Id": $("#id").val(),
+					"Title": $("#title").val(),
+					"Length": $("#length").val()
+				};
+
+				if (Number.parseInt(video.Id) === 0 || video.Id === 0) {
+					videoServer.createVideo(video).done(refreshVideos, clearEdit);
+				} else {
+					videoServer.updateVideo(video).done(refreshVideos, clearEdit);
+				}
+				return false; // to stop execution pipeline
+			};
+
+			const createVideo = function() {
+				const aVideo = { Id: 0, Title: "", Length: 0 };
+				showVideoForEdit(aVideo);
+			};
+
+			const deleteVideo = function() {
+				const id = getId(this);
+				videoServer.deleteVideo(id).done(refreshVideos);
+			}
+
+			const wireEvents = function() {
+				$(document).on("click", ".editVideo", editVideo);
+				$(document).on("click", "#saveVideo", saveVideo);
+				$(document).on("click", "#createVideo", createVideo);
+				$(document).on("click", ".deleteVideo", deleteVideo);
+			};
+
+
+			//master point
+			$(function() {
+				wireEvents();
+				compileTemplates();
+				refreshVideos();
+			});
+
+		}());
+	</script>
+}
